@@ -17,24 +17,21 @@ headers_salida = ['Hostname','nombre_red','Plugin','Plugin Name','IP Address','S
 
 carpeta = args.carpeta
 fecha_escaneo = args.fecha_escaneo
-dir_list = os.listdir(f'{carpeta}')
+dir_list = glob.glob(carpeta+"/*.xlsx")
 zize_dir_list = len(dir_list)
-
 if zize_dir_list != 0:
 	range_pairs = range(2,2*len(dir_list)+2,2)
 	range_odds = range(1,(2*len(dir_list)+1),2)
 	dataframes = []
-	#print(range_odds)
-
 	# Read excel file with sheet name
-	for (i,j,k) in itertools.zip_longest(carpeta,range_odds,range_pairs):
-		dict_df_j = pd.read_excel(f'{carpeta}/{dir_list[0]}', sheet_name='Vulnerabilidades')
+	for (j,k) in itertools.zip_longest(range_odds,range_pairs):
+		dict_df_j = pd.read_excel(f'{dir_list[0]}', sheet_name='Vulnerabilidades')
 		dict_df_j['Fixed'] = 'No'
-		dict_df_k = pd.read_excel(f'{carpeta}/{dir_list[0]}', sheet_name='Remediadas')
+		dict_df_k = pd.read_excel(f'{dir_list[0]}', sheet_name='Remediadas')
 		dict_df_k['Fixed'] = 'Si'
 		dataframes.append(dict_df_j)
 		dataframes.append(dict_df_k)
-
+	#print(dataframes['Fixed'])
 	dataframes_concatenated = pd.concat(dataframes)
 	dataframes_concatenated = dataframes_concatenated[dataframes_concatenated.Severity != 'Info']
 	dataframes_concatenated["CVSS_Final"] = dataframes_concatenated['CVSS V3 Base Score'].fillna(dataframes_concatenated['CVSS V2 Base Score'])
