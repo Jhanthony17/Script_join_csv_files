@@ -5,6 +5,7 @@ This script was proved on Windows 10
 The only thing you need to do is change the name of sheets of every excel you have as follow:
 
 -Vulnerabilidades
+
 -Remediadas
 
 after this every excel should have two sheets, Vulnerabilidades and Remediadas. The order doesn't matters.
