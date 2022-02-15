@@ -13,7 +13,7 @@ parser.add_argument('carpeta',type=str, help='Insertar la carpeta')
 parser.add_argument('fecha_escaneo',type=str, help='Insertar la fecha de escaneo')
 args = parser.parse_args()
 
-headers_salida = ['Hostname','nombre_red','Plugin','Plugin Name','IP Address','Severidad','Port','Protocol','Solution','CVSS_Final','fecha_escaneo','Segmento','CVE','Family','Fixed']
+headers_salida = ['Hostname','nombre_red','Plugin','Plugin Name','Plugin Output','IP Address','Severidad','Port','Protocol','Solution','CVSS_Final','fecha_escaneo','Segmento','CVE','Family','Fixed']
 
 carpeta = args.carpeta
 fecha_escaneo = args.fecha_escaneo
@@ -33,7 +33,7 @@ if zize_dir_list != 0:
 		dataframes.append(dict_df_k)
 	#print(dataframes['Fixed'])
 	dataframes_concatenated = pd.concat(dataframes)
-	dataframes_concatenated = dataframes_concatenated[dataframes_concatenated.Severity != 'Info']
+	#dataframes_concatenated = dataframes_concatenated[dataframes_concatenated.Severity != 'Info']
 	dataframes_concatenated["CVSS_Final"] = dataframes_concatenated['CVSS V3 Base Score'].fillna(dataframes_concatenated['CVSS V2 Base Score'])
 	dataframes_concatenated["CVSS_Final"] = pd.to_numeric(dataframes_concatenated["CVSS_Final"], downcast="float")
 	dataframes_concatenated = dataframes_concatenated.rename(columns={'DNS Name':'Hostname'})
